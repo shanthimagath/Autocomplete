@@ -1,0 +1,37 @@
+autocomplete api
+onclick navigation
+
+CONTROLLER
+@Controller
+public class StudentController {
+    @Autowired
+    private StudentService studentservice;
+    @Autowired
+    private StudentMongoService studentMongoService;
+
+       public StudentController(StudentService studentservice, StudentMongoService studentMongoService) {
+        super();
+        this.studentservice = studentservice;
+        this.studentMongoService = studentMongoService;
+    }
+
+    @GetMapping("/")
+    public String home(Model model) {
+        List<String> names = new ArrayList<>();
+        List<Student> students= studentservice.getAllStudents();
+        for(Student name : students){
+            names.add(name.getName());
+
+        }
+        model.addAttribute("names", names);
+        return "home";
+    }
+
+  @RequestMapping("/search")
+    public ModelAndView search(@ModelAttribute("student")Student student){
+        
+        List<Student>students=studentservice.getStudentByName(student.getName());
+        ModelAndView mav = new ModelAndView("search");
+        mav.addObject("students",students);
+        return mav;
+    }

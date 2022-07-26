@@ -1,0 +1,19 @@
+@Autowired
+	private StudentRepository studentrepository;
+
+	public StudentsServiceimpl(StudentRepository studentrepository) {
+		super();
+		this.studentrepository = studentrepository;
+	}
+
+
+ @Override
+	public List<Student> getAllStudents() {
+		return studentrepository.findAll();
+	}
+
+@Override
+	public List<Student> getStudentByName(String  name) throws NoSuchElementException {
+
+		return studentrepository.findByName(name);
+	}
